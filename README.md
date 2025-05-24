@@ -1,119 +1,102 @@
-WordTrends-Java
+# WordTrends-Java
 
-Overview
+A browser-based Java application for analyzing historical word usage and exploring lexical relationships using NGram and WordNet datasets.
 
-WordTrends-Java is a browser-based data analysis tool designed to explore the historical usage of words in English texts, leveraging the Google Ngram dataset and WordNet lexical database. The backend is implemented in Java, with the frontend provided in HTML and JavaScript. The application supports interactive visualizations, text-based historical queries, and semantic graph exploration of word meanings and relationships.
+## Overview
 
-Features
+This project is divided into two parts:
 
-Project 2A: NGrams Viewer
+- **Project 2A: NGrams Viewer** – Implements backend logic for visualizing word frequency trends over time using Google NGram data.
+- **Project 2B: WordNet Explorer** – Enhances functionality by incorporating WordNet synsets and hyponyms, allowing for semantic exploration of language.
 
-Implements a back-end Java system that analyzes word frequencies over time using the Google Ngram dataset.
+---
 
-Constructs two main classes:
+## 🔍 Project 2A: NGrams Viewer
 
-TimeSeries: Extends TreeMap<Integer, Double> to represent data per year.
+### Features
 
-NGramMap: Parses input files and supports queries like countHistory(), totalCountHistory(), and weightHistory().
+- Parses NGram datasets and maps word usage to time series.
+- Returns historical frequency of words as JSON-formatted text or a base64-encoded chart image.
+- Backend logic integrates with a provided JavaScript/HTML frontend.
+- Implements:
+  - `TimeSeries`: TreeMap-backed year → frequency container.
+  - `NGramMap`: Maps words to their historical usage and supports both raw counts and normalized weights.
+  - `HistoryTextHandler`: Returns textual history for word usage.
+  - `HistoryHandler`: Generates and encodes time-series charts.
 
-Allows users to:
+### File Structure
 
-Enter words and view frequency plots across years (via browser interface).
+proj2a/
+├── data/ # Contains ngrams and total word counts (excluded via .gitignore)
+├── src/ngrams/ # Java backend implementation
+├── static/ # Frontend UI files (ngordnet_2a.html)
+├── tests/ # JUnit tests
 
-See raw frequency data in JSON format using HistoryTextHandler.
 
-View interactive frequency graphs with HistoryHandler.
+### Usage
 
-Utilizes a local HTTP server to handle frontend interaction via Java handlers.
+1. Run `Main.java` to start the backend server.
+2. Open `static/ngordnet_2a.html` in a browser.
+3. Input words and view their usage over time or as a chart.
 
-Project 2B: WordNet Explorer
+---
 
-Extends the application to explore semantic relationships using the WordNet dataset.
+## 🧠 Project 2B: WordNet Explorer
 
-Implements a directed graph to model hyponym relationships.
+### Features
 
-Adds a new feature for exploring hyponyms of one or more input words:
+- Reads synset and hyponym files to build a directed graph of semantic relationships.
+- Implements:
+  - A custom `Graph` structure for traversal.
+  - `WordNet` classes to query synset relationships.
+  - `HyponymsHandler`: Displays hyponyms for input words.
+  - Supports multi-word queries and popularity filtering (`k` parameter).
 
-Single and multi-word queries.
+### Advanced Functionality
 
-Optional parameter k for top-k most frequent results within a year range.
+- Returns all hyponyms for a word or set of words.
+- When `k > 0`, filters results based on frequency in a given time range.
+- Integrates NGramMap to compute popularity-based intersections.
 
-Constructs core logic in HyponymsHandler.java with custom supporting classes like Graph, WordNet, etc.
+### File Structure
 
-Offers accurate intersection of hyponyms across multiple words and filters based on historical usage frequency (integrated with NGramMap).
+proj2b/
+├── data/ # Contains synsets and hyponyms (excluded via .gitignore)
+├── src/wordnet/ # WordNet classes and handlers
+├── static/ # Frontend UI files (ngordnet.html)
+├── tests/ # JUnit tests and test harness
 
-Folder Structure
 
-WordTrends-Java
-├── proj2a
-│   ├── src
-│   ├── static
-│   ├── tests
-│   └── data
-│       ├── ngrams
-│       └── wordnet
-├── proj2b
-│   ├── src
-│   ├── static
-│   ├── tests
-│   └── data
-│       ├── ngrams
-│       └── wordnet
+---
 
-Technologies Used
+## 🧪 Testing
 
-Java (JDK 17+)
+- JUnit-based test coverage for all major components.
+- Use `AutograderBuddy.java` to wire handlers for autograding.
 
-HTML / JavaScript (frontend interface)
+---
 
-Jetty Web Server (local backend routing)
+## 🧰 Requirements
 
-TreeMap, Set, List, Graphs (custom-built)
+- Java 17+
+- IntelliJ IDE recommended
+- Git, Terminal access for setup
 
-Base64 image encoding for frontend visualization
+---
 
-Setup Instructions
+## ⚠️ Notes
 
-Clone Repository
+- Data folders (`/data`) are excluded from GitHub for size reasons. Download and unzip separately.
+- Do not modify `.gitignore` files.
+- Avoid global static variables (e.g. static `NGramMap`).
 
-git clone https://github.com/yds233013/WordTrends-Java.git
-cd WordTrends-Java
+---
 
-Download Dataset Files
-Download and unzip:
+## 💡 Acknowledgements
 
-Project 2A dataset (NGrams)
+- WordNet data adapted from Alina Ene and Kevin Wayne’s assignments at Princeton.
+- Project scaffold and datasets provided as part of university coursework.
 
-Project 2B dataset (WordNet)
-Place each data/ folder inside the respective proj2a and proj2b directories.
+---
 
-Run Main Class
-
-Open Main.java inside either proj2a or proj2b depending on task.
-
-Run the file.
-
-Open ngordnet_2a.html or ngordnet.html in your browser.
-
-Testing
-
-JUnit tests are provided in tests/ for both projects.
-
-You can also manually verify output by interacting with the web interface.
-
-Authors
-
-Developed as part of an academic data structures and software engineering curriculum.
-
-License
-
-This project is for academic and educational use. Do not upload the data files to GitHub. Respect .gitignore configurations.
-
-Acknowledgements
-
-Google NGrams Dataset
-
-Princeton WordNet
-
-Adapted from UC Berkeley course assignments.
 
